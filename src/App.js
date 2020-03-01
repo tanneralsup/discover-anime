@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios'
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const GridItem = (props) => (
   <div className="grid__glex">
@@ -61,7 +62,7 @@ class App extends Component {
     }
   }
   render() {
-
+    
     const { error, isLoaded, items } = this.state;
 
     if (error) {
