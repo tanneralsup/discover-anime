@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap-social/bootstrap-social.css';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 const GridItem = (props) => (
   <div className="grid__glex">
@@ -10,6 +14,8 @@ const GridItem = (props) => (
 )
 
 class App extends Component {
+
+
   
   state = {
     error: null,
@@ -17,11 +23,12 @@ class App extends Component {
     items: []
   }
 
+
   componentDidMount() {
     const query = `
     query {
       Page {
-        media( sort: POPULARITY_DESC) {
+        media( sort: POPULARITY_DESC, search: "") {
           genres
           isAdult
           averageScore
@@ -50,8 +57,6 @@ class App extends Component {
         variables
       });
 
-      console.log(response.data)
-
       this.setState(() => ({
         isLoaded: true,
         items: response.data.data.Page.media
@@ -61,8 +66,9 @@ class App extends Component {
       this.setState(() => ({ error }))
     }
   }
+  
   render() {
-    
+
     const { error, isLoaded, items } = this.state;
 
     if (error) {
@@ -71,23 +77,25 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
 
-      return (
-        <div className="grid">
+
+
+       return (   
+         <div>
+           <Header />
+           <br/>
+           <div className="grid">
           {items.map(item => (
-            <GridItem key={item.id} image={item.coverImage.large} />
+            <GridItem key={item.id} text={item.title} image={item.coverImage.large} />
           ))}
-        </div>
+            </div>
+          <br />
+          <Footer />
+         </div>      
+        
       )
-    }
+          }
   }
 }
-
-
-
-
-
-  
-
 
 
 export default App;
