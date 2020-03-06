@@ -5,8 +5,10 @@ import Header from "./components/Header";
 import axios from "axios";
 import store from "./store";
 
+
+
 const GridItem = props => (
-  <div className="grid__glex">
+  <div className="grid__flex">
     <img className="grid__img" src={props.image} />
   </div>
 );
@@ -109,6 +111,7 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
       return (
+      <div className="container">
         <div>
           <Header />
           <br />
@@ -116,7 +119,7 @@ class App extends Component {
             {items.map(item => (
               <GridItem
                 key={item.id}
-                text={item.title}
+                text={item.title.english}
                 image={item.coverImage.large}
               />
             ))}
@@ -124,6 +127,7 @@ class App extends Component {
           <br />
           <Footer />
         </div>
+      </div>
       );
     }
   }

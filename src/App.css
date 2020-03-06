@@ -1,13 +1,9 @@
-html,
-body {
-  margin: 10px;
-}
-
 .grid {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-flow: dense;
+  margin: 10px;
 }
 
 .grid__flex {
@@ -21,4 +17,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.container{
+  background-image: url(./images/animeWallpaper.jpg);
 }
