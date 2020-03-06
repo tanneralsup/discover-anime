@@ -1,15 +1,18 @@
 const initialState = {
-    userValue: ""
+        searchValue: ""
 }
 
+
 const reducer = (state = initialState, action) => {
-    if (action.type === "SELECT_INPUT_VALUE") {
-        return {
-            ...state,
-            userValue: state.userValue
-        }
+    switch (action.type) {
+        case "SELECT_INPUT_VALUE":
+            return {
+                ...state,
+                searchValue: action.search
+        } 
+        default:
+            return state;
     }
-    return state
 }
 
 export default reducer;

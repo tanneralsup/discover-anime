@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap-social/bootstrap-social.css';
 import axios from 'axios';
+import store from './store'
 
 
 const GridItem = (props) => (
@@ -15,23 +14,59 @@ const GridItem = (props) => (
 
 class App extends Component {
 
-
+  state = this.getCurrentStateFromStore()
   
-  state = {
-    error: null,
-    isLoaded: false,
-    items: []
+  getCurrentStateFromStore() {
+    return {
+      loaded: false,
+      items: [],
+      error: false,
+  
+      searchString: store.getState().searchValue
+    }
   }
+  
+  updateStateFromStore = () => {
+    const currentState = this.getCurrentStateFromStore();
+    
+    if (this.state.searchString !== currentState.searchString) {
+      // this.setState(currentState);
+      this.fetchSearch(currentState.searchString)
+    }
+  }
+    fetchSearch(searchString) {
+      const query = `
+    query {
+      Page {
+        media( sort: POPULARITY_DESC, search: "${searchString}") {
+          genres
+          id
+          title {
+            english
+          }
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+    `;
 
+    const variables = {};
 
+    this.getAnime(query, variables)
+    }
+  componentWillUnmount() {
+    this.unsubscribeStore();
+  }
   componentDidMount() {
+    this.unsubscribeStore = store.subscribe(this.updateStateFromStore);
+
     const query = `
     query {
       Page {
         media( sort: POPULARITY_DESC, search: "") {
           genres
-          isAdult
-          averageScore
           id
           title {
             english
@@ -68,6 +103,7 @@ class App extends Component {
   }
   
   render() {
+    console.log(this.state)
 
     const { error, isLoaded, items } = this.state;
 

@@ -1,19 +1,28 @@
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-
 import React, { useState } from "react";
+import { initialState, reducer } from "../Store/reducer";
+import {connect} from 'react-redux';
 
 
 
+  const Header = (props) => {
+    const [searchValue, setSearchValue] = useState('')
+    const handleSearchInputChanges=(e) => {
+      setSearchValue(e.target.value)
+    }
+     
 
-  const Header = () => {
-      const [playerPTS, setPlayerPTS] = useState('')
+    const callSearchFunction = (e) => {
+      e.preventDefault()
+      props.search(searchValue)
+    }
+    
+    
     const useStyles = makeStyles(theme => ({
 
         root: {
@@ -68,9 +77,9 @@ import React, { useState } from "react";
         },
       }));
       const classes = useStyles()
-      const inputValueChange = e => {
-          setPlayerPTS(e.target.value)
-      }
+      //const onChange = e => {
+         // setSearchValue(e.target.value)
+      
         return (
             <div className={classes.root}>
               <AppBar position="static">
@@ -89,17 +98,25 @@ import React, { useState } from "react";
                         input: classes.inputInput,
                       }}
                       inputProps={{ 'aria-label': 'search' }}
-                      onChange={inputValueChange}
-                    />
+                      value={searchValue}
+                      onChange={handleSearchInputChanges}   
+                    />                    
+                    <input onClick={callSearchFunction} type="submit" value="search" />
                   </div>
                 </Toolbar>
               </AppBar>
             </div>
           );
         }
-      
+      const mapDispatchToProps = dispatch => {
+        return {
+          search: (searchString) => dispatch({ type: "SELECT_INPUT_VALUE", search: searchString })
+        }
+      }
   
-export default Header;
+ 
+  
+export default connect(null, mapDispatchToProps) (Header);
   
   /*export default function Header() {
       constructor(props) {
