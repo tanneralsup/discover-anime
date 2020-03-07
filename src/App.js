@@ -5,11 +5,10 @@ import Header from "./components/Header";
 import axios from "axios";
 import store from "./store";
 
-
-
 const GridItem = props => (
   <div className="grid__flex">
     <img className="grid__img" src={props.image} />
+    <div className="text__bar">{props.text}</div>
   </div>
 );
 
@@ -30,7 +29,6 @@ class App extends Component {
     const currentState = this.getCurrentStateFromStore();
 
     if (this.state.searchString !== currentState.searchString) {
-      // this.setState(currentState);
       this.fetchSearch(currentState.searchString);
     }
   };
@@ -42,7 +40,9 @@ class App extends Component {
           genres
           id
           title {
+            romaji
             english
+            native
           }
           coverImage {
             large
@@ -70,6 +70,8 @@ class App extends Component {
           id
           title {
             english
+            romaji
+            native
           }
           coverImage {
             large
@@ -111,23 +113,24 @@ class App extends Component {
       return <div>Loading...</div>;
     } else {
       return (
-      <div className="container">
-        <div>
-          <Header />
-          <br />
-          <div className="grid">
-            {items.map(item => (
-              <GridItem
-                key={item.id}
-                text={item.title.english}
-                image={item.coverImage.large}
-              />
-            ))}
+        <div className="container">
+          <div>
+            <Header />
+            <br />
+            <div className="grid">
+              {items.map(item => (
+                <GridItem
+                  resizeMode={"contain"}
+                  key={item.id}
+                  text={item.title.english}
+                  image={item.coverImage.large}
+                />
+              ))}
+            </div>
+            <br />
+            <Footer />
           </div>
-          <br />
-          <Footer />
         </div>
-      </div>
       );
     }
   }

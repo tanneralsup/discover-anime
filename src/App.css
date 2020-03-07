@@ -1,7 +1,14 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
 .grid {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-flow: dense;
   margin: 10px;
 }
@@ -11,6 +18,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: whitesmoke;
+  width: 100%;
+  z-index: 1;
+}
+
+.text__bar {
+  z-index: 1;
+  text-align: center;
+  height: 10%;
+  width: 100%;
+  top: 0;
+  background: grey;
+  font-weight: 700;
+  color: whitesmoke;
+  /**some fallback value**/
+  font-size: 16px;
+  /**responsive size is roughly 3.4%  of the device's viewport width**/
+  font-size: 3.4vw;
 }
 
 .grid__img {
@@ -19,6 +44,15 @@
   object-fit: cover;
 }
 
-.container{
+.container {
   background-image: url(./images/animeWallpaper.jpg);
+}
+
+.MuiCard-root {
+  max-width: 100%;
+  background-color: #808080;
+}
+
+.MuiCardMedia-media {
+  height: 140;
 }
